@@ -13,7 +13,7 @@ import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 
 import {Main} from './src/js/scenes';
-// import Theme from './src/js/utils/Theme';
+import Theme from './src/js/utils/Theme';
 import Api from './src/js/utils/Api';
 import reducers from './src/js/reducers';
 
@@ -32,13 +32,12 @@ export default class App extends Component {
               key="main"
               component={Main}
               initial={true}
-              // hideNavBar={Platform.OS === 'ios' ? false : true}
-              hideNavBar={true}
+              hideNavBar={Platform.OS === 'ios' ? false : true}
               headerForceInset={{top: 'never'}}
-              // navigationBarStyle={{
-              //   backgroundColor: Theme.blue,
-              //   borderBottomColor: 'transparent',
-              // }}
+              navigationBarStyle={{
+                backgroundColor: Theme.blue,
+                borderBottomColor: 'transparent',
+              }}
             />
           </Scene>
         </Router>
