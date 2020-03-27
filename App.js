@@ -1,30 +1,48 @@
+/* eslint-disable no-undef */
+/* eslint-disable react-native/no-inline-styles */
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * Challenge Árvore Educação
  *
  * @format
  * @flow
  */
 
-import React from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import React, {Component} from 'react';
+import {Scene, Router} from 'react-native-router-flux';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View>
-          <Text>Árvore Educação</Text>
-        </View>
-      </ScrollView>
-    </>
-  );
-};
+import {Main} from './src/js/scenes';
+// import Theme from './src/js/utils/Theme';
+import Api from './src/js/utils/Api';
+import reducers from './src/js/reducers';
 
-export default App;
+export default class App extends Component {
+  UNSAFE_componentWillMount() {
+    Api.search('Harry')
+      .then(res => console.log(res.data.items))
+      .catch(err => console.log(err));
+  }
+  render() {
+    return (
+      <Provider store={createStore(reducers)}>
+        <Router>
+          <Scene key="root">
+            <Scene
+              key="main"
+              component={Main}
+              initial={true}
+              // hideNavBar={Platform.OS === 'ios' ? false : true}
+              hideNavBar={true}
+              headerForceInset={{top: 'never'}}
+              // navigationBarStyle={{
+              //   backgroundColor: Theme.blue,
+              //   borderBottomColor: 'transparent',
+              // }}
+            />
+          </Scene>
+        </Router>
+      </Provider>
+    );
+  }
+}
